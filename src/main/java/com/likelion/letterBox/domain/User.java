@@ -23,6 +23,9 @@ public class User {
     @Column
     private String password;
 
+    @OneToOne(mappedBy = "user")
+    private PostBox postBox;
+
     public static User from(UserJoinDto userJoinDto){
         return User.builder()
                 .email(userJoinDto.getEmail())
