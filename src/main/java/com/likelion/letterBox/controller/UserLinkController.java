@@ -17,9 +17,11 @@ public class UserLinkController {
     private String secretKey;
     private final UserLinkService userLinkService;
     //UUID 생성
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<String> createUserLink(@RequestHeader("Authorization") String token){
         String email = JwtUtil.getEmail(token, secretKey);
         return ResponseEntity.ok(userLinkService.createUserLink(email));
     }
+    //링크 생성?,,
+
 }
