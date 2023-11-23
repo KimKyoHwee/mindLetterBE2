@@ -24,10 +24,16 @@ public class User {
     @Column
     private String password;
 
-    @OneToOne(mappedBy = "user")
-    private PostBox postBox;
-
+    @Column
     private UUID ownerId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="letter_id")
+    private Letter letter;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="postBox_id")
+    private PostBox postBox;
 
     public static User from(UserJoinDto userJoinDto){
         return User.builder()

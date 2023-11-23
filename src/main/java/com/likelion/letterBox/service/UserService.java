@@ -21,6 +21,15 @@ public class UserService {
     private String secretKey;
     private final UserRepository userRepository;
 
+    public User returnUser(String email){
+        Optional<User> optUser=userRepository.findByEmail(email);
+        if(optUser.isEmpty()) throw new DataNotFoundException("유저를 찾을 수 없습니다.");
+        else{
+            User user=optUser.get();
+            return user;
+        }
+    }
+
     private Long expiredMs=1000*60*60l;  //1시간
     public void join(UserJoinDto userJoinDto) {
         String userEmail = userJoinDto.getEmail();
