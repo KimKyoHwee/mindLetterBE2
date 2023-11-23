@@ -4,6 +4,7 @@ import com.likelion.letterBox.dto.UserJoinDto;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -22,6 +23,11 @@ public class User {
 
     @Column
     private String password;
+
+    @OneToOne(mappedBy = "user")
+    private PostBox postBox;
+
+    private UUID ownerId;
 
     public static User from(UserJoinDto userJoinDto){
         return User.builder()
