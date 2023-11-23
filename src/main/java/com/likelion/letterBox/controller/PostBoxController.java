@@ -36,5 +36,10 @@ public class PostBoxController {
         String email = JwtUtil.getEmail(token, secretKey);
         return ResponseEntity.ok(postBoxService.updateDesign(email,postBoxRequestDto));
     }
+    @GetMapping(value="/")
+    public ResponseEntity<PostBoxReturnDto> getPostBox(@RequestHeader("Authorization")String token){
+        String email = JwtUtil.getEmail(token, secretKey);
+        return ResponseEntity.ok(postBoxService.findByUserEmail(email));
+    }
 
 }

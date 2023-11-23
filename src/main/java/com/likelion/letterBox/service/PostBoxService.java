@@ -43,9 +43,22 @@ public class PostBoxService {
             postBox.setShape(postBoxRequestDto.getShape());
             postBoxRepository.save(postBox);
             return new PostBoxReturnDto(postBox);
-;        }catch (Exception e){
+        }catch (Exception e){
             e.printStackTrace();
         }
         return null;
     }
+    public PostBoxReturnDto findByUserEmail(String email){
+        try {
+            User user = userRepository.findByEmail(email).orElseThrow(() -> {
+                throw new IllegalArgumentException("유저 정보를 불러올 수 없습니다");
+            });
+            PostBox postBox = user.getPostBox();
+            return new PostBoxReturnDto(postBox);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
