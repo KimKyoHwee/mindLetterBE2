@@ -39,12 +39,13 @@ public class LetterController {
             @ApiResponse(code = 401, message = "실패")
     })
     //엽서만들기 TODO:답변 리스트 받아서 칼로API연동
-    @PostMapping
+    @PostMapping("/{UUID}")
     public ResponseEntity<?> createLetter(@RequestBody LetterRequestDto letterRequestDto,
                                           @PathVariable("UUID") String uuid){
         PostBox postBox=postBoxService.returnPostBox(uuid);
         //여기부터 이미지 링크 생성
-        KarloResponseDto response = karloService.createImage(letterRequestDto.getAnswer());
+        KarloResponseDto response = karloService.createImage(
+                papagoService.translateToEnglish(letterRequestDto.getAnswer()));
         String url=response.getImages().get(0).getImage();
         letterService.createLetter(postBox, letterRequestDto, url);
         return ResponseEntity.ok().build();

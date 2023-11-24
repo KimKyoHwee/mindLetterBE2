@@ -46,12 +46,13 @@ public class PostBox {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static PostBox from(PostBoxRequestDto postBoxRequestDto){
+    public static PostBox from(PostBoxRequestDto postBoxRequestDto, User fromUser){
         return PostBox.builder()
                 .nickName(postBoxRequestDto.getNickName())
                 .shape(postBoxRequestDto.getShape())
                 .color(postBoxRequestDto.getColor())
                 .background(postBoxRequestDto.getBackground())
+                .user(fromUser)
                 .build();
     }
 }

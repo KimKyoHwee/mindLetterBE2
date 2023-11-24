@@ -22,7 +22,7 @@ public class PostBoxService {
     private final UserRepository userRepository;
 
     public void createPostBox(User user, PostBoxRequestDto postBoxRequestDto){ //우체통 만들기
-        PostBox postBox=PostBox.from(postBoxRequestDto);
+        PostBox postBox=PostBox.from(postBoxRequestDto, user);
         postBox.setUser(user);
         String uuid = UUID.randomUUID().toString();
         postBox.setUuid(uuid);

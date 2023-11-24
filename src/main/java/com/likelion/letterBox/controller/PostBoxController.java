@@ -21,7 +21,6 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/postbox")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostBoxController {
 
     private final PostBoxService postBoxService;
