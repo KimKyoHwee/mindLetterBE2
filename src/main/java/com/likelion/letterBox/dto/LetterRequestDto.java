@@ -13,4 +13,5 @@ public class LetterRequestDto {
     private String content;
     private String writer;
     List<String> AnswerList;
+    String answer;
 }

@@ -24,8 +24,9 @@ public class LetterService {
     private final PostBoxRepository postBoxRepository;
 
     //TODO: 엽서 만들때 이미지는 칼로API써야됨됨
-   public void createLetter(PostBox postBox, LetterRequestDto letterRequestDto){ //엽서 만들면서 대상count++
-        Letter letter=Letter.from(letterRequestDto, postBox);
+   public void createLetter(PostBox postBox, LetterRequestDto letterRequestDto, String ImageUrl){
+       //엽서 만들면서 대상count++
+        Letter letter=Letter.from(letterRequestDto, postBox, ImageUrl);
         letterRepository.save(letter);
         //엽서 받는사람 카운트 1추가
        postBox.setCount(postBox.getCount()+1);

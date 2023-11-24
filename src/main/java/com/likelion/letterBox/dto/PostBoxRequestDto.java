@@ -15,6 +15,4 @@ public class PostBoxRequestDto {
     private Integer shape;
     private Integer color;
     private Integer background;
-
-
 }

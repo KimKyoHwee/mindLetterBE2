@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -36,7 +37,8 @@ public class SecurityConfig {
                 .csrf().disable()
                 // 모든 요청에 대해 접근 허용
                 .authorizeRequests() //URL접근 권한 설정 시작
-                .antMatchers("/user/**", "/swagger-ui/**","/webjars/**","/v2/api-docs","/swagger-resources/**").permitAll() // 로그인 및 회원가입 경로 허용
+                .antMatchers("/user/**", "/swagger-ui/**","/webjars/**",
+                        "/v2/api-docs","/swagger-resources/**","/letter/**").permitAll() // 로그인 및 회원가입 경로 허용
                 .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 .and()
                 // JWT필터를 통과해야 함
@@ -71,5 +73,10 @@ public class SecurityConfig {
         config.addAllowedMethod("*"); //모든 HTTP 메소드 허용
         source.registerCorsConfiguration("/**", config);  //모든 URL패턴에 CORS설정 적용
         return source;
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
