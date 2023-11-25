@@ -56,6 +56,16 @@ public class PostBoxController {
         return ResponseEntity.ok().body(postBoxService.returnPostBoxDto(user));
     }
 
+    @ApiOperation(value = "UUID활용한 공개 우체통 공유")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "실패")
+    })
+    @GetMapping("/{UUID}")
+    public ResponseEntity<PostBoxReturnDto> getOpenPostBox(@PathVariable("UUID") String uuid){
+        return ResponseEntity.ok().body(PostBoxReturnDto.from(postBoxService.returnPostBox(uuid)));
+    }
+
     @ApiOperation(value = "내 우체통에 담긴 편지 리스트 보기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),

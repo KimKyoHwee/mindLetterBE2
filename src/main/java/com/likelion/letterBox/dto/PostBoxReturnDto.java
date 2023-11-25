@@ -20,7 +20,6 @@ public class PostBoxReturnDto {
     private String ornaments;
     private int count;
     private String uuid;
-    //private List<Letter> letterList;
 
     public static PostBoxReturnDto from(PostBox postBox){
         return PostBoxReturnDto.builder()
@@ -30,7 +29,6 @@ public class PostBoxReturnDto {
                 .ornaments(postBox.getOrnaments())
                 .count(postBox.getCount())
                 .uuid(postBox.getUuid())
-                //.letterList(postBox.getLetterList())
                 .build();
     }
 }
