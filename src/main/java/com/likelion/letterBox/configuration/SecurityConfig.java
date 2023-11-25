@@ -38,7 +38,8 @@ public class SecurityConfig {
                 // 모든 요청에 대해 접근 허용
                 .authorizeRequests() //URL접근 권한 설정 시작
                 .antMatchers("/user/**", "/swagger-ui/**","/webjars/**",
-                        "/v2/api-docs","/swagger-resources/**","/letter/**").permitAll() // 로그인 및 회원가입 경로 허용
+                        "/v2/api-docs","/swagger-resources/**","/letter/**",
+                        "/postbox/{UUID}").permitAll() // 로그인 및 회원가입 경로 허용
                 .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 .and()
                 // JWT필터를 통과해야 함
