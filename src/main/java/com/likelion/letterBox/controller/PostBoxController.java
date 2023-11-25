@@ -2,6 +2,7 @@ package com.likelion.letterBox.controller;
 
 import com.likelion.letterBox.domain.User;
 import com.likelion.letterBox.dto.PostBoxRequestDto;
+import com.likelion.letterBox.dto.PostBoxResponseMemoList;
 import com.likelion.letterBox.dto.PostBoxReturnDto;
 import com.likelion.letterBox.service.PostBoxService;
 import com.likelion.letterBox.service.UserService;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/postbox")
@@ -42,7 +44,7 @@ public class PostBoxController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "내 우체통 보기")
+    @ApiOperation(value = "내 우체통 정보 보기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "실패")
@@ -52,5 +54,16 @@ public class PostBoxController {
         String email= authentication.getName();
         User user=userService.returnUser(email);
         return ResponseEntity.ok().body(postBoxService.returnPostBoxDto(user));
+    }
+
+    @ApiOperation(value = "내 우체통에 담긴 편지 리스트 보기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "실패")
+    })
+    @GetMapping("/{UUID}")
+    public ResponseEntity<List<PostBoxResponseMemoList>> getMemoList(Authentication authentication,
+                                                                     @PathVariable("UUID") String uuid){
+        return ResponseEntity.ok().body(postBoxService.getMemoList(uuid));
     }
 }

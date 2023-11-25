@@ -43,4 +43,15 @@ public class UserController {
         String password=userDto.getPassword();
         return ResponseEntity.ok().body(userService.login(email, password));
     }
+
+    @ApiOperation(value = "아이디 중복확인 api", notes = "토큰 필요 없음, 토큰반납")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "로그인 성공"),
+            @ApiResponse(code = 401, message = "로그인 실패")
+    })
+    @PostMapping("/email")
+    public ResponseEntity<String> checkId(@RequestBody String email){
+        //토큰만 발급됨(로그인 성공시)
+        return ResponseEntity.ok().body(userService.checkEmail(email));
+    }
 }

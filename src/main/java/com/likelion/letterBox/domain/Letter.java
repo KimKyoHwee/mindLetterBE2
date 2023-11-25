@@ -39,7 +39,7 @@ public class Letter {
 
      */
     @ElementCollection  //컬렉션을 칼럼으로 매핑해주는 어노테이션 (별도의 테이블 생성)
-    @CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "photoBox_id")) //임시로 생성할 테이블 설정
+    @CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "letter_id")) //임시로 생성할 테이블 설정
     @Column(name = "answerList")
     private List<String> answerList;
     

@@ -4,6 +4,7 @@ import com.likelion.letterBox.domain.PostBox;
 import com.likelion.letterBox.domain.User;
 import com.likelion.letterBox.dto.KarloResponseDto;
 import com.likelion.letterBox.dto.LetterRequestDto;
+import com.likelion.letterBox.dto.LetterResponseDto;
 import com.likelion.letterBox.service.*;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -51,7 +52,7 @@ public class LetterController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "칼로 api 테스트")
+    @ApiOperation(value = "칼로 api로 이미지 링크 받아오기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "실패")
@@ -96,5 +97,15 @@ public class LetterController {
     @PostMapping("/papgo")
     public ResponseEntity<String> requestTranslatePapago(@RequestBody String prompt) {
         return ResponseEntity.ok().body(papagoService.translateToEnglish(prompt));
+    }
+
+    @ApiOperation(value = "엽서 id로 엽서 열어보기")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "성공"),
+            @ApiResponse(code = 401, message = "실패")
+    })
+    @GetMapping("/{letterId}")
+    public ResponseEntity<LetterResponseDto> createLetter(@PathVariable Long letterId){
+        return ResponseEntity.ok().body(letterService.getLetterDetail(letterId));
     }
 }

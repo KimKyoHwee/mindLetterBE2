@@ -43,8 +43,10 @@ public class PostBox {
     private final List<Letter> letterList = new ArrayList<>();
 
     @OneToOne(mappedBy = "postBox")
-    @JoinColumn(name = "user_id")
     private User user;
+
+    @Column
+    private Long userId;
 
     public static PostBox from(PostBoxRequestDto postBoxRequestDto, User fromUser){
         return PostBox.builder()

@@ -5,6 +5,7 @@ import com.likelion.letterBox.domain.Letter;
 import com.likelion.letterBox.domain.PostBox;
 import com.likelion.letterBox.domain.User;
 import com.likelion.letterBox.dto.LetterRequestDto;
+import com.likelion.letterBox.dto.LetterResponseDto;
 import com.likelion.letterBox.dto.PostBoxRequestDto;
 import com.likelion.letterBox.repository.LetterRepository;
 import com.likelion.letterBox.repository.PostBoxRepository;
@@ -30,5 +31,11 @@ public class LetterService {
         letterRepository.save(letter);
         //엽서 받는사람 카운트 1추가
        postBox.setCount(postBox.getCount()+1);
+    }
+
+    public LetterResponseDto getLetterDetail(Long letterId){
+       Optional<Letter> optLetter=letterRepository.findById(letterId);
+       Letter letter=optLetter.get();
+       return LetterResponseDto.from(letter);
     }
 }

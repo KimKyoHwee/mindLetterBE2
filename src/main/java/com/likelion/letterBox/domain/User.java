@@ -28,11 +28,7 @@ public class User {
     private UUID ownerId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="letter_id")
-    private Letter letter;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="postBox_id")
+    @JoinColumn(name="postBox_id")  //@JoinColumn 가지고 있는 놈이 주인
     private PostBox postBox;
 
     public static User from(UserJoinDto userJoinDto){

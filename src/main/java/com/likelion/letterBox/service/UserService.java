@@ -48,4 +48,10 @@ public class UserService {
         }
         else throw new DataNotFoundException("일치하는 회원 정보가 없습니다.");
     }
+
+    public String checkEmail(String email){
+        Optional<User> optUser=userRepository.findByEmail(email);
+        if(optUser.isEmpty()) return "사용 가능한 이메일입니다.";
+        else return "중복된 이메일입니다.";
+    }
 }
