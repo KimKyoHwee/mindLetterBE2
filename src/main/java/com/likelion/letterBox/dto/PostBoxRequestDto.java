@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostBoxRequestDto {
     private String nickName;
-    private int shape;
-    private int color;
-    private int background;
+    private String shape;
+    private String color;
+    private String ornaments;
 }

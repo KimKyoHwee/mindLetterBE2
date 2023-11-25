@@ -25,13 +25,13 @@ public class PostBox {
     private String nickName;
 
     @Column
-    private int shape;
+    private String shape;
 
     @Column
-    private int color;
+    private String color;
 
     @Column
-    private int background;
+    private String ornaments;
 
     @Column
     private int count;  //초기화 세팅필요
@@ -53,7 +53,7 @@ public class PostBox {
                 .nickName(postBoxRequestDto.getNickName())
                 .shape(postBoxRequestDto.getShape())
                 .color(postBoxRequestDto.getColor())
-                .background(postBoxRequestDto.getBackground())
+                .ornaments(postBoxRequestDto.getOrnaments())
                 .user(fromUser)
                 .build();
     }
