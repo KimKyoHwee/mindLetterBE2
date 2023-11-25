@@ -38,11 +38,13 @@ public class Letter {
     private List<String> questionList;
 
      */
+
+    /*
     @ElementCollection  //컬렉션을 칼럼으로 매핑해주는 어노테이션 (별도의 테이블 생성)
     @CollectionTable(name = "answers", joinColumns = @JoinColumn(name = "letter_id")) //임시로 생성할 테이블 설정
     @Column(name = "answerList")
     private List<String> answerList;
-    
+    */
     //TODO: 1on1으로 USER랑 엮어야되는데, UUID로 찾아서 엮기, 이건 편지 받는 대상 + 대상에 count한개 늘려주기
     public static Letter from(LetterRequestDto letterRequestDto, PostBox requestPostBox,
                               String imageUrl){
