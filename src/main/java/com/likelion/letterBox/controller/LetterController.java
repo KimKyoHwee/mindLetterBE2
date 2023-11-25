@@ -13,7 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
@@ -34,6 +36,8 @@ public class LetterController {
 
     private final PapagoService papagoService;
 
+    private final S3Service s3Service;
+
     @ApiOperation(value = "엽서 만들기")
     @ApiResponses({
             @ApiResponse(code = 200, message = "성공"),
@@ -42,12 +46,18 @@ public class LetterController {
     //엽서만들기 TODO:답변 리스트 받아서 칼로API연동
     @PostMapping("/{UUID}")
     public ResponseEntity<?> createLetter(@RequestBody LetterRequestDto letterRequestDto,
-                                          @PathVariable("UUID") String uuid){
+                                          @PathVariable("UUID") String uuid,
+                                          @RequestPart MultipartFile image) throws IOException {
         PostBox postBox=postBoxService.returnPostBox(uuid);
-        //여기부터 이미지 링크 생성
+
+
+        //이미지 S3저장
+        String url=s3Service.saveFile("karlo",postBox.getUserId(),image);
+        /*여기부터 이미지 링크 생성
         KarloResponseDto response = karloService.createImage(
                 papagoService.translateToEnglish(letterRequestDto.getAnswer()));
         String url=response.getImages().get(0).getImage();
+         */
         letterService.createLetter(postBox, letterRequestDto, url);
         return ResponseEntity.ok().build();
     }
@@ -58,7 +68,7 @@ public class LetterController {
             @ApiResponse(code = 401, message = "실패")
     })
     //테스트용
-    @PostMapping("/karlo")
+    @PostMapping("/image")
     public ResponseEntity<String> createImage(@RequestBody String promptKOR) {
         String prompt= papagoService.translateToEnglish(promptKOR);
         KarloResponseDto response = karloService.createImage(prompt);

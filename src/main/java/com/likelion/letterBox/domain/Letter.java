@@ -50,7 +50,7 @@ public class Letter {
                 .content(letterRequestDto.getContent())
                 .writer(letterRequestDto.getWriter())
                 .postBox(requestPostBox)
-                .answerList(letterRequestDto.getAnswerList())
+                //.answerList(letterRequestDto.getAnswerList())
                 .image(imageUrl)
                 .build();
     }

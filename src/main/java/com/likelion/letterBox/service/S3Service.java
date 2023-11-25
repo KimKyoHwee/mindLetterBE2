@@ -42,9 +42,7 @@ public class S3Service {
     getURl()을 통해 파일이 저장된 URL을 return 해주고,
     이 URL로 이동 시 해당 파일이 오픈됨(버킷 정책 변경 완료)
      */
-    public String saveFile(String directory,String email, MultipartFile multipartFile) throws IOException {
-        //TODO: String directory는 Frame이거나 그림일기의 그림이거나 나눠주는 디렉토리
-        Long userId=getUserId(email);
+    public String saveFile(String directory,Long userId,MultipartFile multipartFile) throws IOException {
         //타임 스탬프로 파일이 계속 덮혀 쓰여지는 것 방지
         String timeStamp = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
         String originalFilename = directory+"/"+userId+"/"+timeStamp+"_"+multipartFile.getOriginalFilename();
