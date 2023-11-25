@@ -15,9 +15,9 @@ import java.util.List;
 @Builder
 public class PostBoxReturnDto {
     private String nickName;
-    private int shape;
-    private int color;
-    private int background;
+    private String shape;
+    private String color;
+    private String ornaments;
     private int count;
     private String uuid;
     //private List<Letter> letterList;
@@ -27,7 +27,7 @@ public class PostBoxReturnDto {
                 .nickName(postBox.getNickName())
                 .shape(postBox.getShape())
                 .color(postBox.getColor())
-                .background(postBox.getBackground())
+                .ornaments(postBox.getOrnaments())
                 .count(postBox.getCount())
                 .uuid(postBox.getUuid())
                 //.letterList(postBox.getLetterList())

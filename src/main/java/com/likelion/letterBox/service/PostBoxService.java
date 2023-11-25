@@ -31,7 +31,6 @@ public class PostBoxService {
         user.setPostBox(postBox);
         String uuid = UUID.randomUUID().toString();
         postBox.setUuid(uuid);
-        postBox.setColor(0);
         postBox.setUserId(user.getId());
         postBoxRepository.save(postBox);
     }
