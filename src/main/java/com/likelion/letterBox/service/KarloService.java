@@ -36,6 +36,8 @@ public class KarloService {
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("prompt", prompt);
+        requestBody.put("return_type", "base64_string");
+        requestBody.put("image_format", "jpeg");
 
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(requestBody, headers);
         ResponseEntity<KarloResponseDto> response = restTemplate.postForEntity(url, entity, KarloResponseDto.class);

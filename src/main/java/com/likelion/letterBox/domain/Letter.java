@@ -46,14 +46,13 @@ public class Letter {
     private List<String> answerList;
     */
     //TODO: 1on1으로 USER랑 엮어야되는데, UUID로 찾아서 엮기, 이건 편지 받는 대상 + 대상에 count한개 늘려주기
-    public static Letter from(LetterRequestDto letterRequestDto, PostBox requestPostBox,
-                              String imageUrl){
+    public static Letter from(LetterRequestDto letterRequestDto, PostBox requestPostBox){
         return Letter.builder()
                 .content(letterRequestDto.getContent())
                 .writer(letterRequestDto.getWriter())
                 .postBox(requestPostBox)
                 //.answerList(letterRequestDto.getAnswerList())
-                .image(imageUrl)
+                .image(letterRequestDto.getImage())
                 .build();
     }
 }

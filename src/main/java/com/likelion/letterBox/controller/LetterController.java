@@ -46,19 +46,9 @@ public class LetterController {
     //엽서만들기 TODO:답변 리스트 받아서 칼로API연동
     @PostMapping("/{UUID}")
     public ResponseEntity<?> createLetter(@RequestBody LetterRequestDto letterRequestDto,
-                                          @PathVariable("UUID") String uuid,
-                                          @RequestPart MultipartFile image) throws IOException {
+                                          @PathVariable("UUID") String uuid) throws IOException {
         PostBox postBox=postBoxService.returnPostBox(uuid);
-
-
-        //이미지 S3저장
-        String url=s3Service.saveFile("karlo",postBox.getUserId(),image);
-        /*여기부터 이미지 링크 생성
-        KarloResponseDto response = karloService.createImage(
-                papagoService.translateToEnglish(letterRequestDto.getAnswer()));
-        String url=response.getImages().get(0).getImage();
-         */
-        letterService.createLetter(postBox, letterRequestDto, url);
+        letterService.createLetter(postBox, letterRequestDto);
         return ResponseEntity.ok().build();
     }
 
@@ -68,11 +58,14 @@ public class LetterController {
             @ApiResponse(code = 401, message = "실패")
     })
     //테스트용
-    @PostMapping("/image")
-    public ResponseEntity<String> createImage(@RequestBody String promptKOR) {
+    @PostMapping("/image/{UUID}")
+    public ResponseEntity<String> createImage(@RequestBody String promptKOR,
+                                              @PathVariable("UUID") String uuid) {
+        PostBox postBox=postBoxService.returnPostBox(uuid);
         String prompt= papagoService.translateToEnglish(promptKOR);
         KarloResponseDto response = karloService.createImage(prompt);
-        String url=response.getImages().get(0).getImage();
+        String base64Image=response.getImages().get(0).getImage();  //base64 문자열
+        String url=s3Service.saveBase64Image("karlo",postBox.getUserId(),base64Image);
         return ResponseEntity.ok(url);
     }
 
