@@ -71,7 +71,7 @@ public class PostBoxController {
             @ApiResponse(code = 200, message = "성공"),
             @ApiResponse(code = 401, message = "실패")
     })
-    @GetMapping("/{UUID}")
+    @GetMapping("/letters/{UUID}")
     public ResponseEntity<List<PostBoxResponseMemoList>> getMemoList(Authentication authentication,
                                                                      @PathVariable("UUID") String uuid){
         return ResponseEntity.ok().body(postBoxService.getMemoList(uuid));
