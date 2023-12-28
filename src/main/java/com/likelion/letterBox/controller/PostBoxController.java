@@ -54,7 +54,7 @@ public class PostBoxController {
 
     @Operation(summary="UUID활용한 공개 우체통 공유")
     @ApiResponse(responseCode = "200", description = "성공")
-    @GetMapping("/{UUID}/postbox")
+    @GetMapping("/postbox/{UUID}")
     public ResponseEntity<PostBoxReturnDto> getOpenPostBox(@PathVariable("UUID") String uuid){
         return ResponseEntity.ok().body(PostBoxReturnDto.from(postBoxService.returnPostBox(uuid)));
     }
@@ -62,7 +62,7 @@ public class PostBoxController {
 
     @Operation(summary="내 우체통에 담긴 편지 리스트 보기")
     @ApiResponse(responseCode = "200", description = "성공")
-    @GetMapping("/{UUID}/letters")
+    @GetMapping("/letters/{UUID}")
     public ResponseEntity<List<PostBoxResponseMemoList>> getMemoList(Authentication authentication,
                                                                      @PathVariable("UUID") String uuid){
         return ResponseEntity.ok().body(postBoxService.getMemoList(uuid));
