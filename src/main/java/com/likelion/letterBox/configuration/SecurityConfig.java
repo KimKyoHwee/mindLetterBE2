@@ -43,7 +43,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(config->config
                         .requestMatchers("/api/v1/user/**", "/swagger-ui/**","/webjars/**",
                         "/v3/api-docs/**","/swagger-resources/**","/api/v1/letter/**",
-                        "/api/v1/postbox/**/open", "/api/v1/postbox/**/letters").permitAll() // 로그인 및 회원가입 경로 허용
+                        "/api/v1/postbox/open/**", "/api/v1/postbox/letters/**").permitAll() // 로그인 및 회원가입 경로 허용
                         .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 );
                 // JWT필터를 통과해야 함
