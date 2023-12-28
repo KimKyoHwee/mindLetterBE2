@@ -43,7 +43,7 @@ public class LetterController {
     @Operation(summary="엽서 만들기")
     @ApiResponse(responseCode = "200", description = "성공")
     //엽서만들기 TODO:답변 리스트 받아서 칼로API연동
-    @PostMapping("/{UUID}/open")
+    @PostMapping("/open/{UUID}")
     public ResponseEntity<?> createLetter(@RequestBody LetterRequestDto letterRequestDto,
                                           @PathVariable("UUID") String uuid) throws IOException {
         PostBox postBox=postBoxService.returnPostBox(uuid);
@@ -55,7 +55,7 @@ public class LetterController {
     @Operation(summary="칼로 api로 이미지 링크 받아오기")
     @ApiResponse(responseCode = "200", description = "성공")
     //테스트용
-    @PostMapping("/{UUID}/image")
+    @PostMapping("/image/{UUID}")
     public ResponseEntity<String> createImage(@RequestBody String promptKOR,
                                               @PathVariable("UUID") String uuid) {
         PostBox postBox=postBoxService.returnPostBox(uuid);
