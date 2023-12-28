@@ -54,7 +54,7 @@ public class PostBoxController {
 
     @Operation(summary="UUID활용한 공개 우체통 공유")
     @ApiResponse(responseCode = "200", description = "성공")
-    @GetMapping("/postbox/{UUID}")
+    @GetMapping("/open/{UUID}")
     public ResponseEntity<PostBoxReturnDto> getOpenPostBox(@PathVariable("UUID") String uuid){
         return ResponseEntity.ok().body(PostBoxReturnDto.from(postBoxService.returnPostBox(uuid)));
     }
