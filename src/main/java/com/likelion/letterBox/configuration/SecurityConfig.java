@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
@@ -47,7 +48,7 @@ public class SecurityConfig {
                 );
                 // JWT필터를 통과해야 함
         http.
-                addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
+                addFilterBefore(new JwtFilter(userService, secretKey), LogoutFilter.class)
                 // CORS 설정
                 .addFilter(corsFilter())
                 // 세션 사용 안함 (JWT 사용을 위해)
