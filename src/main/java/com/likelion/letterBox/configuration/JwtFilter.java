@@ -28,13 +28,13 @@ public class JwtFilter extends OncePerRequestFilter {
     @Override  //권한부여ghr
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
-
         // Swagger 관련 경로에 대한 요청 처리 스킵
-        if (path.contains("/swagger-ui/**") || path.contains("/v2/api-docs/**") || path.contains("/swagger-resources/**")) {
+        if (path.contains("/swagger-ui/**") || path.contains("/v3/api-docs/**") || path.contains("/swagger-resources/**")
+        ||path.contains("/api/v1/user/**")||path.contains("/api/v1/letter/**") || path.contains("/api/v1/postbox/**/open")
+        ||path.contains("/api/v1/postbox/**/letters")) {
             filterChain.doFilter(request, response);
             return;
         }
-
         final String authorization=request.getHeader(HttpHeaders.AUTHORIZATION); //헤더에서 꺼내기
         log.info("authorization : {}", authorization);//토큰에서 userName꺼내기
 

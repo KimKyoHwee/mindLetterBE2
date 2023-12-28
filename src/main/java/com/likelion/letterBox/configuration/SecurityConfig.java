@@ -41,9 +41,9 @@ public class SecurityConfig {
                 .csrf((csrfConfig)->csrfConfig.disable())
                 // 모든 요청에 대해 접근 허용
                 .authorizeHttpRequests(config->config
-                        .requestMatchers("/user/**", "/swagger-ui/**","/webjars/**",
-                        "/v2/api-docs","/swagger-resources/**","/letter/**",
-                        "/postbox/{UUID}").permitAll() // 로그인 및 회원가입 경로 허용
+                        .requestMatchers("/api/v1/user/**", "/swagger-ui/**","/webjars/**",
+                        "/v3/api-docs/**","/swagger-resources/**","/api/v1/letter/**",
+                        "/api/v1/postbox/**/open", "/api/v1/postbox/**/letters").permitAll() // 로그인 및 회원가입 경로 허용
                         .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 );
                 // JWT필터를 통과해야 함
@@ -63,22 +63,22 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.addAllowedOriginPattern("*");
-        config.addAllowedHeader("*");
+        //config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
 
-    private CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);  //자격 증명 정보 허용
-        config.addAllowedOriginPattern("*"); //모든 출저에서 요청을 허용
-        config.addAllowedHeader("*"); //모든 헤더 허용
-        config.addAllowedMethod("*"); //모든 HTTP 메소드 허용
-        source.registerCorsConfiguration("/**", config);  //모든 URL패턴에 CORS설정 적용
-        return source;
-    }
+//    private CorsConfigurationSource corsConfigurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true);  //자격 증명 정보 허용
+//        config.addAllowedOriginPattern("*"); //모든 출저에서 요청을 허용
+//        config.addAllowedHeader("*"); //모든 헤더 허용
+//        config.addAllowedMethod("*"); //모든 HTTP 메소드 허용
+//        source.registerCorsConfiguration("/**", config);  //모든 URL패턴에 CORS설정 적용
+//        return source;
+//    }
 
     @Bean
     public RestTemplate restTemplate() {
