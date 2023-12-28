@@ -2,6 +2,10 @@ package com.likelion.letterBox.configuration;
 
 import com.likelion.letterBox.service.UserService;
 import com.likelion.letterBox.utils.JwtUtil;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -11,10 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -24,8 +25,16 @@ public class JwtFilter extends OncePerRequestFilter {
     private final UserService userService;
     private final String secretKey;
 
-    @Override  //권한부여
+    @Override  //권한부여ghr
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String path = request.getRequestURI();
+
+        // Swagger 관련 경로에 대한 요청 처리 스킵
+        if (path.startsWith("/swagger-ui/**") || path.startsWith("/v2/api-docs/**") || path.startsWith("/swagger-resources/**")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authorization=request.getHeader(HttpHeaders.AUTHORIZATION); //헤더에서 꺼내기
         log.info("authorization : {}", authorization);//토큰에서 userName꺼내기
 

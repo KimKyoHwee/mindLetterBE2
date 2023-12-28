@@ -1,10 +1,11 @@
 package com.likelion.letterBox.domain;
 
 import com.likelion.letterBox.dto.PostBoxRequestDto;
-import io.swagger.models.auth.In;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

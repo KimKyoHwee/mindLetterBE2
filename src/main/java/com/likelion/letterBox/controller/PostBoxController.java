@@ -7,10 +7,9 @@ import com.likelion.letterBox.dto.PostBoxReturnDto;
 import com.likelion.letterBox.service.PostBoxService;
 import com.likelion.letterBox.service.UserService;
 import com.likelion.letterBox.utils.JwtUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,9 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/postbox")
+@RequestMapping("/v1/postbox")
 @RequiredArgsConstructor
+@Tag(name="postbox", description = "우체통 관련 api")
 public class PostBoxController {
 
     private final PostBoxService postBoxService;
@@ -30,11 +30,8 @@ public class PostBoxController {
 
     //닉네임 , 기본 디자인으로 우체통 생성
 
-    @ApiOperation(value = "우체통 만들기")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "실패")
-    })
+    @Operation(summary="우체통 만들기")
+    @ApiResponse(responseCode = "200", description = "성공")
     @PostMapping
     public ResponseEntity<?> createPostBox(Authentication authentication,
                                            @RequestBody PostBoxRequestDto postBoxRequestDto){
@@ -44,11 +41,9 @@ public class PostBoxController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "내 우체통 정보 보기")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "실패")
-    })
+
+    @Operation(summary="내 우체통 정보 보기")
+    @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping
     public ResponseEntity<PostBoxReturnDto> getPostBox(Authentication authentication){
         String email= authentication.getName();
@@ -56,21 +51,17 @@ public class PostBoxController {
         return ResponseEntity.ok().body(postBoxService.returnPostBoxDto(user));
     }
 
-    @ApiOperation(value = "UUID활용한 공개 우체통 공유")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "실패")
-    })
+
+    @Operation(summary="UUID활용한 공개 우체통 공유")
+    @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/{UUID}")
     public ResponseEntity<PostBoxReturnDto> getOpenPostBox(@PathVariable("UUID") String uuid){
         return ResponseEntity.ok().body(PostBoxReturnDto.from(postBoxService.returnPostBox(uuid)));
     }
 
-    @ApiOperation(value = "내 우체통에 담긴 편지 리스트 보기")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "성공"),
-            @ApiResponse(code = 401, message = "실패")
-    })
+
+    @Operation(summary="내 우체통에 담긴 편지 리스트 보기")
+    @ApiResponse(responseCode = "200", description = "성공")
     @GetMapping("/letters/{UUID}")
     public ResponseEntity<List<PostBoxResponseMemoList>> getMemoList(Authentication authentication,
                                                                      @PathVariable("UUID") String uuid){

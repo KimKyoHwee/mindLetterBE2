@@ -6,9 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -32,25 +34,26 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
                 // CSRF 설정 비활성화
-                .csrf().disable()
+                .csrf((csrfConfig)->csrfConfig.disable())
                 // 모든 요청에 대해 접근 허용
-                .authorizeRequests() //URL접근 권한 설정 시작
-                .antMatchers("/user/**", "/swagger-ui/**","/webjars/**",
+                .authorizeHttpRequests(config->config
+                        .requestMatchers("/user/**", "/swagger-ui/**","/webjars/**",
                         "/v2/api-docs","/swagger-resources/**","/letter/**",
                         "/postbox/{UUID}").permitAll() // 로그인 및 회원가입 경로 허용
-                .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
-                .and()
+                        .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
+                );
                 // JWT필터를 통과해야 함
-                .addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
+        http.
+                addFilterBefore(new JwtFilter(userService, secretKey), UsernamePasswordAuthenticationFilter.class)
                 // CORS 설정
-                .cors().configurationSource(corsConfigurationSource())
-                .and()
+                .addFilter(corsFilter())
                 // 세션 사용 안함 (JWT 사용을 위해)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        return http.build();
+                .sessionManagement(sessionManagement ->
+                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+    return http.build();
     }
 
     @Bean

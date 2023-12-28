@@ -1,17 +1,19 @@
 package com.likelion.letterBox.domain;
 
 import com.likelion.letterBox.dto.LetterRequestDto;
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
+
+
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Letter {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

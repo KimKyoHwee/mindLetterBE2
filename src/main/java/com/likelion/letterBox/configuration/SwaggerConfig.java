@@ -1,14 +1,12 @@
 package com.likelion.letterBox.configuration;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Info;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import springfox.documentation.builders.ApiInfoBuilder;
-import springfox.documentation.builders.PathSelectors;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.service.ApiInfo;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,26 +14,22 @@ import java.util.Set;
 @Configuration
 @EnableWebMvc
 public class SwaggerConfig {
-    private ApiInfo apiInfo(){
-        return new ApiInfoBuilder()
-                .title("팔팔한 사자들 LetterBox")
+    private Info swaggerInfo(){
+        return new Info()
+                .title("mindLetter API명세서")
                 .version("1.0.0")
-                .description("화이팅!")
-                .build();
+                .description("23년도 여름 멋사 중앙 해커톤 프로젝트\n" +
+                        "ZeroMarket API 명세서입니다.\n");
     }
 
     @Bean
-    public Docket swaggerApi() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .consumes(getConsumeContentTypes())
-                .produces(getProduceContentTypes())
-                .apiInfo(apiInfo())
-                .select()
-                // controller 파일들이 있는 경로(패키지?) 설정
-                .apis(RequestHandlerSelectors.basePackage("com.likelion.letterBox.controller"))
-                .paths(PathSelectors.any())
-                .build()
-                .useDefaultResponseMessages(false);
+    public GroupedOpenApi chatOpenApi() {
+        String[] paths = {"/v1/**"};
+
+        return GroupedOpenApi.builder()
+                .group("MINDLETTER API v1")
+                .pathsToMatch(paths)
+                .build();
     }
 
     // consume type 뭐가 필요한지 생각

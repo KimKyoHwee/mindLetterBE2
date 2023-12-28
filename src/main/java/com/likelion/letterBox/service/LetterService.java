@@ -30,7 +30,7 @@ public class LetterService {
         Letter letter=Letter.from(letterRequestDto, postBox);
         letterRepository.save(letter);
         //엽서 받는사람 카운트 1추가
-       postBox.setCount(postBox.getCount()+1);
+       postBox.setCount(postBox.getCount()+1); //도메인에 함수 두는게 낫다(세터 남발금지)
     }
 
     public LetterResponseDto getLetterDetail(Long letterId){
